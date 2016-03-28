@@ -2,13 +2,17 @@
 Lab 2: Leaflet Draw
 
 Task 1: Try to draw something on the map
+*/
 
+/*
 Try to use one or two of the drawing tools. They should allow you to draw
 without needing any additional configuration. These shapes will not be added to
 the map. We'll fix that in the next task.
 
 Task 2: Add rectangles to map
+*/
 
+/*
 Add the rectangle layers to the map when they are drawn. Hint: you can use the
 addLayer function that we have used in the past.
 
@@ -70,7 +74,7 @@ Moving your mouse outside of the circle should remove the highlighting.
 ===================== */
 
 // Global Variables
-
+var myRectangles = [];
 var myRectangle;
 
 // Initialize Leaflet Draw
@@ -89,11 +93,43 @@ map.addControl(drawControl);
 
 // Run every time Leaflet draw creates a new layer
 
+// map.on('draw:created', function (e) {
+//     if(myRectangle) {map.removeLayer(myRectangle);
+//         $("#shapes").empty();}
+//     var type = e.layerType; // The type of shape
+//     var layer = e.layer; // The Leaflet layer for the shape
+//     myRectangle = layer;
+//     var id = L.stamp(layer); // The unique Leaflet ID for the layer
+//     map.addLayer(myRectangle);
+//     $("#shapes").append('<h1>Current ID: ' +id+ '</h1></div>');
+//
+// });
+
 map.on('draw:created', function (e) {
+
     var type = e.layerType; // The type of shape
     var layer = e.layer; // The Leaflet layer for the shape
+    myRectangles.push(layer);
     var id = L.stamp(layer); // The unique Leaflet ID for the layer
-
-
-
+    map.addLayer(layer);
+    console.log(myRectangles);
+    $("#shapes").append('<h1 id = ' +id+ '>Current ID: ' +id+ '</h1></div>');
 });
+
+// $("#shapes").hover(function() {
+//   
+//
+// });
+
+
+
+// Stretch Goal 2: Connect sidebar and map
+//
+// The HTML in the sidebar and the Leaflet layers on the map and in our Javascript
+// variable can be linked by using the Leaflet ID. Modify the application so that
+// clicking on a shape in the sidebar will do one of the following:
+//
+// - Change the color of the corresponding shape on the map
+// - Delete the corresponding shape on the map (be sure to remove it from the
+// sidebar and the myRectanges array)
+// - Anything else you can think of!
